@@ -1,3 +1,3 @@
-This is a readme. There's nothing here yet, because there isn't anything to read about.
-I am editing the readme to check if everything is working.
 ![workflow](https://github.com/ThatBoatSmell/se_methods_set08103/actions/workflows/main.yml/badge.svg)
+[![LICENSE](https://img.shields.io/github/license/ThatBoatSmell/devops.svg?style=flat-square)](https://github.com/ThatBoatSmell/devops/blob/master/LICENSE)
+[![Releases](https://img.shields.io/github/release/ThatBoatSmell/devops/all.svg?style=flat-square)](https://github.com/ThatBoatSmell/devops/releases)
