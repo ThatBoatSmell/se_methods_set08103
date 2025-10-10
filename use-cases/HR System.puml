@@ -1,15 +1,36 @@
 @startuml
-'https://plantuml.com/sequence-diagram
 
-autonumber
+actor HR as "HR Advisor"
 
-== Initialization ==
+rectangle Database
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
+rectangle "HR System" {
+    usecase UC4 as "Get salaries
+    by role"
 
-== Repetition ==
+    usecase UCa as "Print salaries"
 
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+    HR - UC4
+    UC4 ..> UCa : include
+    UC4 - Database
+}
+
+@enduml
+
+@startuml
+' Use case 1
+actor HR as "HR Advisor"
+
+rectangle Database
+
+rectangle "HR System"{
+    usecase UC1 as "Get salaries of all employees"
+
+    usecase UCa as "print salaries"
+
+    HR - UC1
+    UC1 ..> UCa : include
+    UCa - Database
+}
+
 @enduml
