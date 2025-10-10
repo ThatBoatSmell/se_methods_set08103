@@ -6,7 +6,10 @@ services:
 
   # db is is db folder
   db:
-    build: db/.
-    restart: always
+    build:
+      dockerfile: Dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_ROOT_HOST: "%"
     ports:
       - "33060:3306"
