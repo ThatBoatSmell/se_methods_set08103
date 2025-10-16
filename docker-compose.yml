@@ -1,16 +1,28 @@
-version: '3'
+version: '3.8'
+
 services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: employees
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pexample"]
+      timeout: 5s
+      retries: 10
+      interval: 5s
+      start_period: 30s
+    ports:
+      - "3306:3306"
+
   app:
     build: .
     depends_on:
-      - db
-
-  db:
-    image: mysql/mysql-server:latest
+      db:
+        condition: service_healthy
     environment:
-      MYSQL_ROOT_PASSWORD: example
-      MYSQL_ROOT_HOST: "%"
-    ports:
-      - "33060:3306"
-    volumes:
-      - ./db/test_db:/docker-entrypoint-initdb.d
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: employees
+      DB_USER: root
+      DB_PASSWORD: example
