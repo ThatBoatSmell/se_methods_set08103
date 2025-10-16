@@ -34,3 +34,98 @@ rectangle "HR System"{
 }
 
 @enduml
+
+@startuml
+' Use case 2
+actor HR as "HR Advisor"
+
+rectangle Database
+
+rectangle "HR System" {
+    usecase UC2 as "Get salaries
+    by department"
+
+    usecase UCa as "print salaries"
+
+    HR - UC2
+    UC2 ..> UCa : include
+    UCa - Database
+
+@enduml
+
+@startuml
+' Use case 3
+actor DM as "Department Manager"
+actor HR as "HR Advisor"
+
+rectangle Database
+
+rectangle "HR System" {
+    usecase UC3 as "Get salaries
+    for specified department"
+
+    usecase UCa as "print salaries"
+
+    DM -> HR
+    HR - UC3
+    UC3 ..> UCa : include
+    UCa - Database
+
+@enduml
+
+@startuml
+' use case 5
+
+actor HR as "HR Advisor"
+actor NEW as "New Employee"
+
+rectangle Database
+
+rectangle "HR System" {
+    usecase UC5 as "Add new employee details to system"
+
+    usecase UCa as "add details"
+
+    NEW -> HR : employee details
+    HR - UC5
+    UC5 ..> UCa
+    UCa - Database
+}
+@enduml
+
+@startuml
+' use case 6
+
+actor HR as "HR Advisor"
+actor EM as "Employee"
+
+rectangle Database
+
+rectangle "HR System" {
+    usecase UC6 as "View employee details"
+
+    EM -> HR : Promotion Request
+    HR - UC6
+    UC6 -  Database
+
+@enduml
+
+@startuml
+'use case 7
+' As an HR advisor I want to update an employee's details so that employee's details are kept up-to-date.
+
+actor HR as "HR Advisor"
+actor EM as "Employee"
+
+rectangle Database
+
+rectangle "HR System" {
+    usecase UC7 as "Update employee details"
+    usecase UCa as "add details"
+
+    EM -> HR : Updated details
+    HR - UC7
+    UC7 ..> UCa
+    UCa -  Database
+
+@enduml
