@@ -19,20 +19,19 @@ public class App
 
         // Connection to the database
         Connection con = null;
-        int retries = 100;
+        int retries = 10;
+
         for (int i = 0; i < retries; ++i)
         {
             System.out.println("Connecting to database...");
             try
             {
-                // Wait a bit for db to start
+                // Wait a bit for db to start - MOVED HERE
                 Thread.sleep(30000);
+
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://db:3306/employees?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
-                // Wait a bit
-                Thread.sleep(10000);
-                // Exit for loop
                 break;
             }
             catch (SQLException sqle)
@@ -48,6 +47,45 @@ public class App
 
         if (con != null)
         {
+            try
+            {
+                // Create an SQL statement
+                Statement stmt = con.createStatement();
+
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT emp_no, first_name, last_name "
+                                + "FROM employees "
+                                + "WHERE last_name = 'Christ' "
+                                + "ORDER BY emp_no ASC";
+
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+
+                // Print header
+                System.out.println("\nEmployees with last name 'Christ':");
+                System.out.println("----------------------------------");
+
+                // Process the results
+                while (rset.next())
+                {
+                    int emp_no = rset.getInt("emp_no");
+                    String first_name = rset.getString("first_name");
+                    String last_name = rset.getString("last_name");
+
+                    System.out.println(emp_no + " " + first_name + " " + last_name);
+                }
+
+                // Close result set
+                rset.close();
+                stmt.close();
+            }
+            catch (Exception e)
+            {
+                System.out.println("Error executing query");
+                System.out.println(e.getMessage());
+            }
+
             try
             {
                 // Close connection
