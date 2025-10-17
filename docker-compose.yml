@@ -1,28 +1,19 @@
-version: '3.8'
-
+version: '3'
 services:
+  # db is in db folder
   db:
-    image: mysql:latest
+    build: db/.
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: example
-      MYSQL_DATABASE: employees
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pexample"]
-      timeout: 5s
-      retries: 10
-      interval: 5s
-      start_period: 30s
     ports:
-      - "3306:3306"
+      - "33060:3306"
 
+  # Application Dockerfile is in same folder which is .
   app:
     build: .
     depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_NAME: employees
-      DB_USER: root
-      DB_PASSWORD: example
+      - db
+    links:
+      - db
